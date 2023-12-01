@@ -7,7 +7,7 @@ module.exports = {
         .catch((err) => res.status(500).json(err));
   },
     getSingleUser(req,res){
-        User.findOne({_id: req.parms.userId})
+        User.findOne({_id: req.params.userId})
         .select('-__v')
       .then((user) =>
         !user
@@ -49,10 +49,9 @@ module.exports = {
   },
     addFriend(req, res) {
     console.log('adding friend');
-    console.log(req.body);
     User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $addToSet: { friends: req.body } },
+      { $addToSet: { friends: req.params.friendId } },
       { runValidators: true, new: true }
     )
       .then((user) =>
@@ -67,7 +66,7 @@ module.exports = {
     delFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $pull: { friends: { friendId: req.params.friendId } } },
+      { $pull: { friends: req.params.friendId } },
       { runValidators: true, new: true }
     )
       .then((user) =>
