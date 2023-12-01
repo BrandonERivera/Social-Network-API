@@ -1,12 +1,12 @@
 const { User, Thought } = require('../models');
 
 module.exports = {
-    getusers(req,res) {
+    getUsers(req,res) {
         User.find()
         .then((user)=> res.json(user))
         .catch((err) => res.status(500).json(err));
   },
-    getsingleuser(req,res){
+    getSingleUser(req,res){
         User.findOne({_id: req.parms.userId})
         .select('-__v')
       .then((user) =>
@@ -29,7 +29,7 @@ module.exports = {
       .then((user) =>
         !user
           ? res.status(404).json({ message: 'No User with that ID' })
-          : User.deleteMany({ _id: { $in: user.thoughts} })
+          : Thought.deleteMany({ _id: { $in: user.thoughts} })
       )
       .then(() => res.json({ message: 'User deleted!' }))
       .catch((err) => res.status(500).json(err));
