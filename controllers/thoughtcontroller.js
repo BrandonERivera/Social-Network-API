@@ -28,7 +28,7 @@ module.exports = {
       .then((user) =>
         !user
           ? res.status(404).json({
-              message: 'Application created, but found no user with that ID',
+              message: 'thought created, but found no user with that ID',
             })
           : res.json('Created Thought')
       )
@@ -51,9 +51,9 @@ module.exports = {
       .then((user) =>
         !user
           ? res.status(404).json({
-              message: 'Application created but no user with this id!',
+              message: 'Thought created but no user with this id!',
             })
-          : res.json({ message: 'Application successfully deleted!' })
+          : res.json({ message: 'Thought successfully deleted!' })
       )
       .catch((err) => res.status(500).json(err));
   },
@@ -87,7 +87,7 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
     delReaction(req, res) {
-   Thought.findOneAndUpdate(
+   Thought.findOneAndRemove(
       { _id: req.params.thoughtId },
       { $pull: { reactions: { tagId: req.params.reactionId } } },
       { runValidators: true, new: true }
